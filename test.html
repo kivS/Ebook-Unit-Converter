@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Testing page</title>
+	<script src="https://cdn.rawgit.com/Stuk/jszip/master/dist/jszip.min.js"></script>
+	<script src="https://rawgit.com/eligrey/FileSaver.js/master/FileSaver.min.js"> </script>
+</head>
+<body>
+	<h1>Test page!</h1>
+	<input type="file" id="files" name="files[]" onchange="fileReaderTest(event)" multiple>
+	<output id="list"></output>
+	<script>
+
+		function fileReaderTest(e){
+			console.log( files = e.target.files);
+
+			// Use file reader API do  read content of text
+			fl = new FileReader();
+            
+            fl.onload = function(e){
+            	r = e.target.result,ev = e;
+
+            	// Get zip's files
+            	zip = new JSZip(e.target.result);
+            }
+
+            // Read File with FileReader API
+            fl.readAsBinaryString(files[0]);
+
+            // generate & download modified zip
+            //saveAs(zip.generate({type:'blob'}),'name.zip')
+           
+
+		}//
+		
+	</script>
+</html>
+
