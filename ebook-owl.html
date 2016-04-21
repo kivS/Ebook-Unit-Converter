@@ -9,26 +9,7 @@
 <body>
 	<h1>Lift up!</h1>
 	<input type="file" id="files" name="files[]" onchange="startOwl(event)" multiple>
-	<script>
-		/**
-		 * User inserts ebooks and chooses beetween imperic or metric system. Owl picks up his pen and starts cramming. Users gets his freshly converted ebooks 
-		 * @param  {[type]} e [description]
-		 * @return {[type]}   [description]
-		 */
-		function startOwl(e){
-			console.log(f = e.target.files);
-
-			var files = e.target.files;
-
-			for (var i = 0; i < files.length; i++) {
-				owlSupports(files[i]);
-			}
-		    
-
-		}
-		
-
-	</script>
+	
 </body>
 </html>
 
