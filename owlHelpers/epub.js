@@ -21,21 +21,22 @@ bot.start = function(file){
 
 				//console.log(zip.files[zippedFile].name);
 				
-				// Get data from each matched file
+				// Get data from each matched text file
 				if(zip.files[zippedFile].name == "OEBPS/part19.xhtml") zip.files[zippedFile].async('string').then(function(data){
 					$debug.test_data =data;
 					
 					// Iterate over the units the user chose and see if there's a match with the data
 					 var regexp,regExp_result,convertedData;
 					$owl.config.unit[$owl.user_options.unit].forEach(function(el){
-						//Build regExp for data with each alias(Array)
+						//Build regExp for data with each alias(Array) ex: (km | kilometer | ..)
 						regexp = new RegExp("\\b("+el.alias.toString().replace(/,/g,'|')+")\\b",'gi');
-						console.log(regexp);
+						console.log('RegExp: '+regexp);
 						regExp_result = data.match(regexp);
-						console.log(regExp_result);
+						console.log('RegExp result: '+regExp_result);
 
 						if(regExp_result !== null){
-							console.log(owlUnitsBot.converter(data,$owl.config.unit[$owl.user_options.unit]));
+							convertedData = owlUnitsBot.converter(data,$owl.config.unit[$owl.user_options.unit]);
+							$debug.converted_data = convertedData;
 						}
 						
 					});   

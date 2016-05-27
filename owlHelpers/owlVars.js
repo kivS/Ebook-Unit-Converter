@@ -1,8 +1,8 @@
 module.exports = {
 
   	infos:{
-  		error: new Array()
-  	
+  		error: new Array(),
+  	  debug: new Array()
   	},
   	config:{
   		unit:{
