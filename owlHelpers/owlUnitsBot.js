@@ -8,20 +8,24 @@ var bot = {};
  */
 bot.converter = function(data,user_units) {
 	//console.log(user_units);
+	//Go over each unit
 	for(var unit in user_units){
 		console.log('user unit: '+user_units[unit].alias);
+		//Go over each unit's alias which is an array of aliases
 		for(var item in user_units[unit].alias){
+			//Get single alias
 			var aliasX = user_units[unit].alias[item];
 			var rgx = new RegExp('\\b'+aliasX+'\\b','gi');
 
 			// if there's no sign of the aliasX in the data then continue
 			if(data.match(rgx) === null) continue;
 			
-			// match number + unit + (previous conversion)
+			// match number(p1) + unit(p2) + (previous conversion)
 			var replace_rgx = new RegExp('(\\d+\\s*)('+aliasX+'\\b)(\\(.+\\))?','gi');
 
 			data = data.replace(replace_rgx, function(match,p1,p2){
 				console.log('match: '+match);
+				// Remove space from params: 
 				var params = p1.trim()+" "+p2.trim();
 				var query = params+" to "+user_units[unit].convertsTo;
 				var q_result = convert(query);
@@ -32,7 +36,7 @@ bot.converter = function(data,user_units) {
 				console.log('convert(query): '+convert(query));
 				console.log('result: '+params+"("+convert(query)+")");
 				
-				
+				// data.replace will replace the data with params+"("+q_result+")"
 				return params+"("+q_result+")";
 			});
 
