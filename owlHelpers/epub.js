@@ -2,7 +2,7 @@ var bot = {};
 
 
 bot.start = function(file){
-	//return console.info('['+file.name + '] is an epub ebook!');
+	//console.info('['+file.name + '] is an epub ebook!');
 	
 	// Use FileReader API to load file to memory
 	var flRdr = new FileReader();
@@ -12,15 +12,17 @@ bot.start = function(file){
 	flRdr.onload = function(e){
 		//Use jszip to get ebook's content
 		window.zip = new JSZip();
-		//TODO: bind current epub file into the zippedFiles promise
-		zip.loadAsync(e.target.result).then(function(zippedFiles) {
+		//bind current epub file into the zippedFiles promise
+		zip.loadAsync(e.target.result).then(processEpub.bind(null,file.name));
+		
+		function processEpub(epubFile,zippedFiles){
+			console.log('\nCurrent epub file: '+epubFile);
 			// Go over each file in the zip 
 			for(var zippedFile in zippedFiles.files){
 				// If file has no data || file name matches any parementers(eg: .jpg, .png ..) then file is skipped
 				if( (!zip.files[zippedFile]._data) || (zip.files[zippedFile].name.match(/(\.png|\.css|\.jp\w*g|\.xml)/gi) !== null) ) continue;
-	
+			
 				var currentFileInZip = zip.files[zippedFile];
-								
 				// Get data from each matched text & and bind the current file to the promise result so johny doesn't feel lost
 				currentFileInZip.async('string').then(processCurrentFile.bind(null,currentFileInZip));
 
@@ -48,7 +50,7 @@ bot.start = function(file){
 								data = newData;
 								console.log('Converted data: '+data);
 								//Save converted data into current file
-								//zip.file(currentFileInZip, data);
+								zip.file(currentFile.name, data);
 							}else{
 								console.log('Converted data: '+newData);
 							}
@@ -57,15 +59,14 @@ bot.start = function(file){
 
 					});
 
-				}
-				
-				
+				}	
 
 			}
-		});
+
+		}
 		
-		
-	}
+	} 
+
 }
 
 

@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
+  var DEBUG = true;
+  if(DEBUG == false) console.log = function (){};
 	console.log("Document ready");
   window.$debug = {}; 
 
