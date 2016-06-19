@@ -9,16 +9,16 @@ var bot = {};
 bot.converter = function(data,user_units) {
 	var data_length = data.length;
 	//Go over each unit
-	for(var unit in user_units){
+	Object.keys(user_units).forEach(unit=>{
 		console.log('user unit: '+user_units[unit].alias);
 		//Go over each unit's alias which is an array of aliases
-		for(var item in user_units[unit].alias){
+		Object.keys(user_units[unit].alias).forEach(item=>{
 			//Get single alias
 			var aliasX = user_units[unit].alias[item];
 			var rgx = new RegExp('\\b'+aliasX+'\\b','gi');
 
 			// if there's no sign of the aliasX in the data then continue
-			if(data.match(rgx) === null) continue;		
+			if(data.match(rgx) === null) return;		
 
 			// match number(p1) + unit(p2) + (previous conversion)
 			// TODO: p1 won't recognize 2,000
@@ -27,8 +27,8 @@ bot.converter = function(data,user_units) {
 			data = data.replace(replace_rgx, function(match,p1,p2){
 				console.log('Alias matched: '+p2);
 				console.log('match: '+match);
-				// Remove space from params: 
-				var params = p1.trim()+" "+p2.trim();
+				// Remove space from params | and get the first alias from the list(Default)
+				var params = p1.trim()+" "+user_units[unit].alias[0];
 				var query = params+" to "+user_units[unit].convertsTo;
 				var q_result = convert(query);
 
@@ -41,12 +41,13 @@ bot.converter = function(data,user_units) {
 				// data.replace will replace the data with params+"("+q_result+")"
 				return params+"("+q_result+")";
 			});
+			
+		});
+	});
 
-		}
-		
-	}
 	//Return data only if it's been modified
 	return (data_length == data.length)? null:data;
+
 }
 
 
@@ -59,7 +60,12 @@ bot.converter = function(data,user_units) {
  * @return {[String]}  
  */
 function convert(q,p=3){
-	return math.format(math.eval(q),p);
+	try{
+		return math.format(math.eval(q),p);
+	}catch(e){
+		alert(e);
+		exit();
+	}
 }
 
 module.exports = bot;

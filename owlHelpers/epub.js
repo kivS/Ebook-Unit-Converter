@@ -19,7 +19,7 @@ bot.start = function(file){
 			console.log('\nCurrent epub file: '+epubFile);
 			var zippedFiles = zippedFiles.files;
 			var lastZippedFileTracker = Object.keys(zippedFiles);
-
+	
 			// Go over each file in the zip 
 			Object.keys(zippedFiles).forEach(key=>{
 				// If file has no data || file name matches any parementers(eg: .jpg, .png ..) then file is skipped & removed from the lastZippedFileTracker
@@ -46,16 +46,17 @@ bot.start = function(file){
 					// Iterate over the units the user chose and see if there's an early simple match with the data
 					// TODO: instead of a loop on the units maybe it's better just get all the alias in the user unit and build a bigger regexp to run only once
 					// 		 that way there's no false convertions
+					// TODO: bug - last proccessed file in zip on show on some epubs		 
 					$owl.config.unit[$owl.user_options.unit].forEach(function(el){
 						//Build the regExp with array(unit.alias) for the data
 						regexp = new RegExp("\\b("+el.alias.toString().replace(/,/g,'|')+")\\b",'gi');
 						console.log('RegExp: '+regexp);
 						regExp_result = data.match(regexp);
 						console.log('RegExp result: '+regExp_result);
-
 						if(regExp_result !== null){
 							//Converts the data
 							newData = owlUnitsBot.converter(data,$owl.config.unit[$owl.user_options.unit]);
+
 							if(newData != null){
 								data = newData;
 								console.log('Converted data: '+data);
@@ -73,14 +74,13 @@ bot.start = function(file){
 
 				function checkLastFile(currentFileName){
 					if(lastZippedFileTracker.length !== 1){
-						lastZippedFileTracker = lastZippedFileTracker.filter(e=>e!==currentFileName)
+						lastZippedFileTracker = lastZippedFileTracker.filter(e=>e!==currentFileName);
+						//console.log('lastZippedFileTracker:'+lastZippedFileTracker);
 					}else{
 						console.log('Last processed file in zip: '+currentFileName);
 					}
 				}				
-
 			});
-
 		}
 		
 	} 

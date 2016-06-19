@@ -21,12 +21,12 @@ module.exports = {
   			toImperial:[
   				{
   					name:'Kilograms',
-            alias:['kilogram','kilogramme','kg'],
+            alias:['kg','kilogram','kilogramme'],
   					convertsTo:'lbs',
   				},
   				{
             name:'Kilometer',
-            alias:['kilometer','kilometers','km'],
+            alias:['km','kilometer','kilometers'],
             convertsTo:'miles',
   				}
   			]
