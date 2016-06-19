@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   //Definition of program
   $owl = require('./owlHelpers/owlVars.js');
 
+  // Load converter modules
+  var epub = require('./owlHelpers/epub.js');
+
   // Load units bot
   owlUnitsBot = require('./owlHelpers/owlUnitsBot.js');
 
@@ -46,7 +49,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   		switch(true){
   			case isEpub :
-  				var epub = require('./owlHelpers/epub.js');
   				epub.start(files[i]);
   			break;
 

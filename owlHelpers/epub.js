@@ -12,25 +12,35 @@ bot.start = function(file){
 	flRdr.onload = function(e){
 		//Use jszip to get ebook's content
 		window.zip = new JSZip();
-		//bind current epub file into the zippedFiles promise
+		//load zip & bind current epub file into the zippedFiles promise
 		zip.loadAsync(e.target.result).then(processEpub.bind(null,file.name));
 		
 		function processEpub(epubFile,zippedFiles){
 			console.log('\nCurrent epub file: '+epubFile);
+			var zippedFiles = zippedFiles.files;
+			var lastZippedFileTracker = Object.keys(zippedFiles);
+
 			// Go over each file in the zip 
-			for(var zippedFile in zippedFiles.files){
-				// If file has no data || file name matches any parementers(eg: .jpg, .png ..) then file is skipped
-				if( (!zip.files[zippedFile]._data) || (zip.files[zippedFile].name.match(/(\.png|\.css|\.jp\w*g|\.xml)/gi) !== null) ) continue;
-			
-				var currentFileInZip = zip.files[zippedFile];
-				// Get data from each matched text & and bind the current file to the promise result so johny doesn't feel lost
-				currentFileInZip.async('string').then(processCurrentFile.bind(null,currentFileInZip));
+			Object.keys(zippedFiles).forEach(key=>{
+				// If file has no data || file name matches any parementers(eg: .jpg, .png ..) then file is skipped & removed from the lastZippedFileTracker
+				if( (!zippedFiles[key]._data) || (zippedFiles[key].name.match(/(\.png|\.css|\.jp\w*g|\.xml)/gi) !== null) ){
+					//new array without the matched keys
+					lastZippedFileTracker = lastZippedFileTracker.filter(e=>e!==key)
+					return;
+				} 
+
+				//Get current fileInZip object
+				var currentFileInZip = zippedFiles[key];
+
+				// Get data from each matched text,bind the current file to the promise result so johny doesn't feel lost & bind currentFile.name to get last processed file in zip 
+				currentFileInZip.async('string').then(processCurrentFile.bind(null,currentFileInZip)).then(checkLastFile.bind(null,currentFileInZip.name));
 
 				function processCurrentFile(currentFile,data){
-					console.log('\n');
-					console.log('Current File:')
+					console.log('\nCurrent File:')
 					console.log(currentFile);
 					console.log('data: '+Boolean(data));
+					// Let's stop here if there's no data shall we?!
+					if(Boolean(data) == false) return false;
 
 					var regexp,regExp_result, newData;
 					// Iterate over the units the user chose and see if there's an early simple match with the data
@@ -59,9 +69,17 @@ bot.start = function(file){
 
 					});
 
-				}	
+				}
 
-			}
+				function checkLastFile(currentFileName){
+					if(lastZippedFileTracker.length !== 1){
+						lastZippedFileTracker = lastZippedFileTracker.filter(e=>e!==currentFileName)
+					}else{
+						console.log('Last processed file in zip: '+currentFileName);
+					}
+				}				
+
+			});
 
 		}
 		
