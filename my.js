@@ -27,11 +27,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var isUserUnitSet = null;
 
     while(isUserUnitSet !== true){
-      $owl.user_options.unit = prompt("Change ebook units to? [toMetric = 0 | toImperial = 1]");
-      if($owl.user_options.unit === '0') $owl.user_options.unit = 'toMetric';
-      if($owl.user_options.unit === '1') $owl.user_options.unit = 'toImperial';
+      $owl.config.user_options.unit = prompt("Change ebook units to? [toMetric = 0 | toImperial = 1]");
+      if($owl.config.user_options.unit === '0') $owl.config.user_options.unit = 'toMetric';
+      if($owl.config.user_options.unit === '1') $owl.config.user_options.unit = 'toImperial';
 
-      isUserUnitSet = ($owl.user_options.unit !== null && $owl.user_options.unit.match(/(toMetric|toImperial)$/gi) !== null) ? true:false;
+      isUserUnitSet = ($owl.config.user_options.unit !== null && $owl.config.user_options.unit.match(/(toMetric|toImperial)$/gi) !== null) ? true:false;
 
     }
 

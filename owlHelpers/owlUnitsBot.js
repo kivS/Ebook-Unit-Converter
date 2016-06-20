@@ -4,9 +4,10 @@ var bot = {};
  * Get file data & units desired, do magic then .. profit??
  * @param  {[String]} data       -->     ebook text data 
  * @param  {[object]} user_units -->     user's desired units
+ * @param  {[object]} epubFile -->     	 current epub file
  * @return {[String]}  data      -->     updated text data
  */
-bot.converter = function(data,user_units) {
+bot.converter = function(data,user_units,epubFile) {
 	var data_length = data.length;
 	//Go over each unit
 	Object.keys(user_units).forEach(unit=>{
@@ -33,7 +34,7 @@ bot.converter = function(data,user_units) {
 				var q_result = convert(query);
 
 				//debug info
-				$owl.infos.debug.push(query+" : "+q_result);
+				$owl.infos.debug.push('File: '+epubFile+' | '+query+" : "+q_result);
 				console.log('query: '+query);
 				console.log('convert(query): '+convert(query));
 				console.log('result: '+params+"("+convert(query)+")");

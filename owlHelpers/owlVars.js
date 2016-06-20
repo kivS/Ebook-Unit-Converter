@@ -30,11 +30,12 @@ module.exports = {
             convertsTo:'miles',
   				}
   			]
-  		}
+  		},
+      user_options:{
+        unit:null
+      }
+
   	},
-  	user_options:{
-      unit:null
-    },
     converted_ebooks: new Array()
  }
   

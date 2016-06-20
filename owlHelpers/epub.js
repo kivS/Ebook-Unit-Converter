@@ -46,8 +46,7 @@ bot.start = function(file){
 					// Iterate over the units the user chose and see if there's an early simple match with the data
 					// TODO: instead of a loop on the units maybe it's better just get all the alias in the user unit and build a bigger regexp to run only once
 					// 		 that way there's no false convertions
-					// TODO: bug - last proccessed file in zip on show on some epubs		 
-					$owl.config.unit[$owl.user_options.unit].forEach(function(el){
+					$owl.config.unit[$owl.config.user_options.unit].forEach(function(el){
 						//Build the regExp with array(unit.alias) for the data
 						regexp = new RegExp("\\b("+el.alias.toString().replace(/,/g,'|')+")\\b",'gi');
 						console.log('RegExp: '+regexp);
@@ -55,7 +54,7 @@ bot.start = function(file){
 						console.log('RegExp result: '+regExp_result);
 						if(regExp_result !== null){
 							//Converts the data
-							newData = owlUnitsBot.converter(data,$owl.config.unit[$owl.user_options.unit]);
+							newData = owlUnitsBot.converter(data,$owl.config.unit[$owl.config.user_options.unit],epubFile);
 
 							if(newData != null){
 								data = newData;
