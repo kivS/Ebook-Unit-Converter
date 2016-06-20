@@ -25,7 +25,7 @@ bot.start = function(file){
 				// If file has no data || file name matches any parementers(eg: .jpg, .png ..) then file is skipped & removed from the lastZippedFileTracker
 				if( (!zippedFiles[key]._data) || (zippedFiles[key].name.match(/(\.png|\.css|\.jp\w*g|\.xml)/gi) !== null) ){
 					//new array without the matched keys
-					lastZippedFileTracker = lastZippedFileTracker.filter(e=>e!==key)
+					lastZippedFileTracker = lastZippedFileTracker.filter(e=>e!==key);
 					return;
 				} 
 
@@ -78,6 +78,18 @@ bot.start = function(file){
 						//console.log('lastZippedFileTracker:'+lastZippedFileTracker);
 					}else{
 						console.log('Last processed file in zip: '+currentFileName);
+						//Save converted epub ebooks
+						//zip.generateAsync({type:'blob'}).then(saveEpubFile.bind(null,epubFile));
+
+						function saveEpubFile(epubFile_name,epubFile_data){
+							console.log('File saved: '+epubFile);
+							console.log(epubFile_data);
+							//
+							$owl.converted_ebooks.push({
+								'name':epubFile_name,
+								'file_data':epubFile_data
+							});
+						}
 					}
 				}				
 			});

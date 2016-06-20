@@ -34,6 +34,7 @@ module.exports = {
   	},
   	user_options:{
       unit:null
-    }
+    },
+    converted_ebooks: new Array()
  }
   
