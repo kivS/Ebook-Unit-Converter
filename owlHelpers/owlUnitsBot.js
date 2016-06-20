@@ -23,11 +23,13 @@ bot.converter = function(data,user_units,epubFile) {
 
 			// match number(p1) + unit(p2) + (previous conversion)
 			// TODO: p1 won't recognize 2,000
-			var replace_rgx = new RegExp('(\\d+\\s*)('+aliasX+'\\b)(\\(.+\\))?','gi');
+			var replace_rgx = new RegExp('(\\d+[,.]\\d+\\s*)('+aliasX+'\\b)(\\(.+\\))?','gi');
 
 			data = data.replace(replace_rgx, function(match,p1,p2){
 				console.log('Alias matched: '+p2);
 				console.log('match: '+match);
+				// Remove ',' from number, ex: 2,000 => 2000
+				p1 = p1.replace(new RegExp('[,]','gi'),"");
 				// Remove space from params | and get the first alias from the list(Default)
 				var params = p1.trim()+" "+user_units[unit].alias[0];
 				var query = params+" to "+user_units[unit].convertsTo;
