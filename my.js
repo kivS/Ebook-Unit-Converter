@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
   var DEBUG = true;
-  if(DEBUG == false) console.log = function (){};
+  if(DEBUG == false) console.log = function (){},console.error = function(){};
 	console.log("Document ready");
   window.$debug = {}; 
 
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
           switch(true){
             case isEpub :
-              epub.starts(files[i]);
+              epub.start(files[i]);
             break;
 
             default:

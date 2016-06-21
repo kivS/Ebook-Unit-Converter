@@ -22,7 +22,8 @@ bot.converter = function(data,user_units,epubFile) {
 			if(data.match(rgx) === null) return;		
 
 			// match number(p1) + unit(p2) + (previous conversion)
-			var replace_rgx = new RegExp('(\\d+[,.]\\d+\\s*)('+aliasX+'\\b)(\\(.+\\))?','gi');
+			var replace_rgx = new RegExp('(\\d+\,?\\d+\\s*)('+aliasX+'\\b)(\\(.+\\))?','gi');
+			//console.log('Converter replacer regExp: '+replace_rgx);
 
 			data = data.replace(replace_rgx, function(match,p1,p2){
 				console.log('Alias matched: '+p2);

@@ -19,6 +19,8 @@ bot.start = function(file){
 			console.log('\nCurrent epub file: '+epubFile);
 			var zippedFiles = zippedFiles.files;
 			var lastZippedFileTracker = Object.keys(zippedFiles);
+			//Build aliases regExp
+			var aliasesRegExp = new RegExp("\\b("+getAliasesRegExp()+")\\b",'gi');
 	
 			// Go over each file in the zip 
 			Object.keys(zippedFiles).forEach(key=>{
@@ -42,32 +44,25 @@ bot.start = function(file){
 					// Let's stop here if there's no data shall we?!
 					if(Boolean(data) == false) return false;
 
-					var regexp,regExp_result, newData;
-					// Iterate over the units the user chose and see if there's an early simple match with the data
-					// TODO: instead of a loop on the units maybe it's better just get all the alias in the user unit and build a bigger regexp to run only once
-					// 		 that way there's no false convertions
-					$owl.config.unit[$owl.config.user_options.unit].forEach(function(el){
-						//Build the regExp with array(unit.alias) for the data
-						regexp = new RegExp("\\b("+el.alias.toString().replace(/,/g,'|')+")\\b",'gi');
-						console.log('RegExp: '+regexp);
-						regExp_result = data.match(regexp);
-						console.log('RegExp result: '+regExp_result);
-						if(regExp_result !== null){
-							//Converts the data
-							newData = owlUnitsBot.converter(data,$owl.config.unit[$owl.config.user_options.unit],epubFile);
+					//Aliases regExp
+					console.log('Aliases RegExp: '+aliasesRegExp);
+					regExp_result = data.match(aliasesRegExp);
+					console.log('RegExp result: '+regExp_result);
+					if(regExp_result !== null){
+						//Converts the data
+						newData = owlUnitsBot.converter(data,$owl.config.unit[$owl.config.user_options.unit],epubFile);
 
-							if(newData != null){
-								data = newData;
-								console.log('Converted data: '+data);
-								//Save converted data into current file
-								zip.file(currentFile.name, data);
-							}else{
-								console.log('Converted data: '+newData);
-							}
-
+						if(newData != null){
+							data = newData;
+							console.log('Converted data: '+data);
+							//Save converted data into current file
+							zip.file(currentFile.name, data);
+						}else{
+							console.log('Converted data: '+newData);
 						}
 
-					});
+					}
+
 
 				}
 
@@ -78,7 +73,7 @@ bot.start = function(file){
 					}else{
 						console.log('Last processed file in zip: '+currentFileName);
 						//Save converted epub ebooks
-						//zip.generateAsync({type:'blob'}).then(saveEpubFile.bind(null,epubFile));
+						zip.generateAsync({type:'blob'}).then(saveEpubFile.bind(null,epubFile));
 
 						function saveEpubFile(epubFile_name,epubFile_data){
 							console.log('File saved: '+epubFile);
@@ -90,7 +85,8 @@ bot.start = function(file){
 							});
 						}
 					}
-				}				
+				}
+
 			});
 		}
 		
@@ -98,7 +94,14 @@ bot.start = function(file){
 
 }
 
-
+function getAliasesRegExp(){
+	var x = '';
+	$owl.config.unit[$owl.config.user_options.unit].forEach(el=>{
+		x += el.alias.toString()+",";
+	});
+	// take out last ',' and replace ',' to '|''
+	return x.slice(0,-1).split(',').join('|');
+}
 
 
 module.exports = bot;
