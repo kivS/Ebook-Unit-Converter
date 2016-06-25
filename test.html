@@ -35,7 +35,15 @@
            
 
 		}//
-		
+
+		function convert(q,p=3){
+			try{
+				return math.format(math.eval(q),p);
+			}catch(e){
+				console.error(e.stack);
+			}
+		}
+				
 	</script>
 
 
