@@ -1,4 +1,5 @@
 var bot = {};
+var nlp = window.nlp_compromise;
 
 /**
  * Get file data & units desired, do magic then .. profit??
@@ -22,7 +23,7 @@ bot.converter = function(data,user_units,epubFile) {
 			if(data.match(rgx) === null) return;		
 
 			// match number(p1) + unit(p2) + (previous conversion)
-			var replace_rgx = new RegExp('(\\d+\,?\\d+\\s*)('+aliasX+'\\b)(\\(.+\\))?','gi');
+			var replace_rgx = new RegExp('(\\d+\,?\\d+\\s*)(\\b'+aliasX+'\\b)(\\(.+\\))?','gi');
 			//console.log('Converter replacer regExp: '+replace_rgx);
 
 			data = data.replace(replace_rgx, function(match,p1,p2){
@@ -69,5 +70,19 @@ function convert(q,p=3){
 		console.error(e.stack);
 	}
 }
+
+/**
+ * Get text & return number equivalent
+ * @param  {String} txt       -> query
+ * @return {Number OR Null}   -> converted data
+ */
+function getNumberFromText(txt){
+
+	// remove unwanted characters from txt[, .]
+	text = txt.replace(',.','');
+
+	return nlp.value(text).number
+}
+
 
 module.exports = bot;
