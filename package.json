@@ -4,11 +4,20 @@
   "description": "User inserts ebooks and chooses beetween imperic or metric system. Owl picks up his pen and starts cramming. Users gets his freshly converted ebooks ",
   "main": "my.js",
   "scripts": {
-    "dev": "puer -p 3000 --no-launch & watchify my.js -o myCompiled.js -vd"
+    "dev": "sass --watch my.sass:dist/my.css & puer -p 3000 --no-launch & watchify my.js -v -t babelify -o dist/my.js",
+    "build": ""
   },
   "author": "Vik Borges",
   "license": "ISC",
   "dependencies": {
-    "mathjs": "^3.2.1"
+    "bootstrap": "^4.0.0-alpha.2",
+    "mathjs": "^3.2.1",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babelify": "^7.3.0"
   }
 }

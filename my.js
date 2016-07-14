@@ -1,78 +1,126 @@
-document.addEventListener("DOMContentLoaded", function(event) { 
-  var DEBUG = true;
-  if(DEBUG == false) console.log = function (){},console.error = function(){};
-	console.log("Document ready");
-  window.$debug = {}; 
-
-	// Set start up event for input
-	document.getElementById('files').addEventListener('change',startOwl);
-	
-  //Definition of program
-  $config = require('./config.js');
-
-  // Load units bot.
-  $units = require('./myModules/units.js');
-
-  // Load converter modules
-  $epub = require('./myModules/epub.js');
+// React init
+var React = require('react');
+var ReactDOM = require('react-dom');
 
 
-  /**
-   * User inserts ebooks and chooses beetween imperic or metric system. Owl picks up his pen and starts cramming. Users gets his freshly converted ebooks 
-   * @param  {[type]} e [description]
-   * @return {[type]}   [description]
-   */
-  function startOwl(e){
+var App = React.createClass({
+	render: function(){
+		return(
+			<div className="container-fluid">
 
-    try{
-        //Get User's units (if user.unit is not empty and if user.unit equals metric or imperial then user.unit is valid)
-        var isUserUnitSet = null;
+			  {/*Select system*/}
+			  <div className="row">
+			    <div className="col-xs-12 text-xs-center">
+			      <div className="btn-group" data-toggle="buttons">
+			        <label className="btn btn-primary-outline">
+			          <input type="radio" name="options" id="option1" autoComplete="off"/>
+			          Metric System
+			        </label>
+			        <label className="btn btn-primary-outline">
+			          <input type="radio" name="options" id="option2" autoComplete="off"/> 
+			          Imperial System
+			        </label>
+			      </div>
+			    </div>
+			  </div>
+			  
+			  {/*Drag & drop Area*/}
+			  <div className="row">
+			    <div className="col-xs-12 text-xs-center">
+			      <button className="btn btn-primary-outline" type="submit">Drag &amp; Drop files or Click here</button>
+			    </div>
+			  </div>
+			  
+			  {/*Download all ebooks */}
+			  <div className="row">
+			    <div className="col-xs-12 text-xs-center">
+			      <button className="btn btn-primary-outline" type="submit">Download  All</button>
+			    </div>
+			  </div>
+			  
+			 {/* Ebook list area*/}
+			  <div className="row">
+			    <div className="col-xs-12 text-xs-center">
+			      <div className="card-deck">
 
-        while(isUserUnitSet !== true){
-          $config.user_options.unit = prompt("Change ebook units to? [toMetric = 0 | toImperial = 1]");
-          if($config.user_options.unit === '0') $config.user_options.unit = 'toMetric';
-          if($config.user_options.unit === '1') $config.user_options.unit = 'toImperial';
+			       <div className="card">
+			         <div className="card-block">
+			           <h6 className="card-title">Ebook title</h6>
+			           <a href="#" className="btn btn-primary-outline btn-block">Download</a>
+			         </div>
+			       </div>
 
-          isUserUnitSet = ($config.user_options.unit !== null && $config.user_options.unit.match(/(toMetric|toImperial)$/gi) !== null) ? true:false;
+			       <div className="card">
+			         <div className="card-block">
+			           <h6 className="card-title">Ebook title</h6>
+			           <a href="#" className="btn btn-primary-outline btn-block">Download</a>
+			         </div>
+			       </div>
 
-        }
+			       <div className="card">
+			         <div className="card-block">
+			           <h6 className="card-title">Ebook title</h6>
+			           <a href="#" className="btn btn-primary-outline btn-block">Download</a>
+			         </div>
+			       </div>
 
-        console.log($debug.files = e.target.files);
+			       <div className="card">
+			         <div className="card-block">
+			           <h6 className="card-title">Ebook title</h6>
+			           <a href="#" className="btn btn-primary-outline btn-block">Download</a>
+			         </div>
+			       </div>
 
-        var files = e.target.files;
+			        <div className="card">
+			         <div className="card-block">
+			           <h6 className="card-title">Ebook title</h6>
+			           <a href="#" className="btn btn-primary-outline btn-block">Download</a>
+			         </div>
+			       </div>
 
-      //Goes over & filters files uploaded by the user and calls the apropriate block for decoding the supported file
-        for (var i = 0; i < files.length; i++) {
-          
-          var fileExtension = files[i].name.split('.').pop();
-          var fileType = files[i].type;
+			        <div className="card">
+			         <div className="card-block">
+			           <h6 className="card-title">Ebook title</h6>
+			           <a href="#" className="btn btn-primary-outline btn-block">Download</a>
+			         </div>
+			       </div>
 
-          var isEpub = fileExtension === 'epub' && fileType === 'application/epub+zip';
+			        <div className="card">
+			         <div className="card-block">
+			           <h6 className="card-title">Ebook title</h6>
+			           <a href="#" className="btn btn-primary-outline btn-block">Download</a>
+			         </div>
+			       </div>
 
-          switch(true){
-            case isEpub :
-              $epub.start(files[i]);
-            break;
-
-            default:
-              $config.infos.error.push('['+files[i].name+'] is not supported by owl');
-            
-          }
-        }
-          
-
-    }catch(e){
-      $config.infos.error.push(e.stack);
-      console.error(e.stack)
-    }
-
-  }
-
- 
-
-
-
-  
-/******************************************************************************************************************************************/
+			      </div>
+			    </div>
+			  </div>
+			  
+			   {/*info & error Feed area*/}
+			  <div className="row">
+			    <div className="col-xs-12 text-xs-center">
+			      <div className="alert alert-success" role="alert">
+			        <strong>Well done!</strong> You successfully read <a href="#" className="alert-link">this important alert message</a>.
+			      </div>
+			    </div>
+			    <div className="col-xs-12 text-xs-center">
+			      <div className="alert alert-danger" role="alert">
+			        <strong>Well done!</strong> You successfully read <a href="#" className="alert-link">this important alert message</a>.
+			      </div>
+			    </div>
+			    <div className="col-xs-12 text-xs-center">
+			      <div className="alert alert-success" role="alert">
+			        <strong>Well done!</strong> You successfully read <a href="#" className="alert-link">this important alert message</a>.
+			      </div>
+			    </div>
+			  </div>
+			  
+			</div>
+		);
+	}
 });
 
+
+ReactDOM.render(<App/>, document.getElementById('app'));
+
+console.log('All systems go!');
