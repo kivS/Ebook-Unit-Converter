@@ -1,4 +1,6 @@
-module.exports = {
+var bot = {};
+
+var initialConfig = {
 
   	infos:{
   		error: new Array(),
@@ -102,4 +104,16 @@ module.exports = {
     },
     converted_ebooks: new Array()
  }
-  
+
+bot.save = function(config_data){
+    sessionStorage.setItem('config', JSON.stringify(config_data));
+ }
+
+bot.open = function(){
+  if(sessionStorage.getItem('config') == null){
+     sessionStorage.setItem('config', JSON.stringify(initialConfig));
+  }
+  return JSON.parse(sessionStorage.getItem('config'));
+}
+
+module.exports = bot;
