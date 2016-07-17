@@ -16,13 +16,23 @@ var $config = require('./config.js');
 var $epub = require('./myModules/epub.js');
 
 var App = React.createClass({
-/*	getInitialState: function(){
+	getInitialState: function(){
 		return {
-			
+			converted_ebooks: [],
+			infos: []
 		}	
-	},*/
+	},
+	componentDidMount: function(){
+		this.updateStates();
+		setInterval(this.updateStates, 2000);
+	},
+	updateStates: function(){
+		var ebooks = $config.open().converted_ebooks;
+		var infos = $config.open().infos;
+
+		this.setState({converted_ebooks:ebooks, infos:infos});
+	},
 	startBot: function(files){
-		
 		try{
 
 			// Local $config
@@ -45,7 +55,11 @@ var App = React.createClass({
 		        break;
 
 		        default:
-		          config.infos.error.push('['+files[i].name+'] is not supported by owl');
+		          config.infos.push({
+		          	id: Date.now()+Math.random(),
+		          	type: 'error',
+		          	msg: '['+files[i].name+'] is not supported'
+		          });
 		          $config.save(config);
 		        	
 		      }
@@ -70,10 +84,10 @@ var App = React.createClass({
 			  	<DownAllEbooks />
 			  
 			  	{/* Ebook list area*/}
-			  	<EbookList /> 
+			  	<EbookList converted_ebooks={this.state.converted_ebooks} /> 
 			  
 			 	{/*info & error Feed area*/}
-			 	<Feeds />  
+			 	<Feeds infos={this.state.infos} />  
 			</div>
 		);
 	}

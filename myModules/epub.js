@@ -1,9 +1,13 @@
+var $units = require('./units.js');
+var $config = require('../config.js');
+
 var bot = {};
 
+// Local $config
+var config = $config.open();
 
 bot.start = function(file){
 	//console.info('['+file.name + '] is an epub ebook!');
-	
 	// Use FileReader API to load file to memory
 	var flRdr = new FileReader();
 	// Read ebook as binary string
@@ -11,7 +15,7 @@ bot.start = function(file){
 
 	flRdr.onload = function(e){
 		//Use jszip to get ebook's content
-		window.zip = new JSZip();
+		var zip = new JSZip();
 		//load zip & bind current epub file into the zippedFiles promise
 		zip.loadAsync(e.target.result).then(processEpub.bind(null,file.name));
 		
@@ -34,6 +38,8 @@ bot.start = function(file){
 				//Get current fileInZip object
 				var currentFileInZip = zippedFiles[key];
 
+				//console.log(currentFileIn);
+
 				// Get data from each matched text,bind the current file to the promise result so johny doesn't feel lost & bind currentFile.name to get last processed file in zip 
 				currentFileInZip.async('string').then(processCurrentFile.bind(null,currentFileInZip)).then(checkLastFile.bind(null,currentFileInZip.name));
 
@@ -46,11 +52,12 @@ bot.start = function(file){
 
 					//Aliases regExp
 					console.log('Aliases RegExp: '+aliasesRegExp);
-					regExp_result = data.match(aliasesRegExp);
+					var regExp_result = data.match(aliasesRegExp);
 					console.log('RegExp result: '+regExp_result);
+
 					if(regExp_result !== null){
 						//Converts the data
-						newData = $units.converter(data,$config.unit[$config.user_options.unit],epubFile);
+						var newData = $units.converter(data,config.unit[config.user_options.unit],epubFile);
 
 						if(newData != null){
 							data = newData;
@@ -79,10 +86,12 @@ bot.start = function(file){
 							console.log('File saved: '+epubFile);
 							console.log(epubFile_data);
 							//
-							$config.converted_ebooks.push({
-								'name':epubFile_name,
-								'file_data':epubFile_data
+							config.converted_ebooks.push({
+								id: Date.now()+Math.random(),
+								name: epubFile_name,
+								file_data: epubFile_data
 							});
+							$config.save(config);
 						}
 					}
 				}
@@ -91,17 +100,15 @@ bot.start = function(file){
 		}
 		
 	} 
-
 }
 
 function getAliasesRegExp(){
 	var x = '';
-	$config.unit[$config.user_options.unit].forEach(el=>{
+	config.unit[config.user_options.unit].forEach(el=>{
 		x += el.alias.toString()+",";
 	});
 	// take out last ',' and replace ',' to '|''
 	return x.slice(0,-1).split(',').join('|');
 }
-
 
 module.exports = bot;

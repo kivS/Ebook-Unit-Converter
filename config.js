@@ -2,10 +2,7 @@ var bot = {};
 
 var initialConfig = {
 
-  	infos:{
-  		error: new Array(),
-  	  debug: new Array()
-  	},
+  	infos:new Array(),
 		unit:{
 			toMetric:[
 				{

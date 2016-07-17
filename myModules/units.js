@@ -1,5 +1,8 @@
+var $config = require('../config.js');
+
 var bot = {};
-var nlp = window.nlp_compromise;
+//var nlp = window.nlp_compromise;
+
 
 /**
  * Get file data & units desired, do magic then .. profit??
@@ -9,6 +12,9 @@ var nlp = window.nlp_compromise;
  * @return {[String]}  data      -->     updated text data
  */
 bot.converter = function(data,user_units,epubFile) {
+	// Local $config
+	var config = $config.open();
+
 	var data_length = data.length;
 	//Go over each unit
 	Object.keys(user_units).forEach(unit=>{
@@ -48,7 +54,13 @@ bot.converter = function(data,user_units,epubFile) {
 				var q_result = convert(query);
 
 				//debug info
-				$config.infos.debug.push('File: '+epubFile+' | '+query+" : "+q_result);
+				config.infos.push({
+					id: Date.now()+Math.random(),
+					type: 'debug',
+					msg: 'File: '+epubFile+' | '+query+" : "+q_result
+				});
+				$config.save(config);
+				
 				console.log('query: '+query);
 				console.log('convert(query): '+convert(query));
 				console.log('result: '+params+"("+convert(query)+")");
@@ -87,13 +99,13 @@ function convert(q,p=3){
  * @param  {String} txt       -> query
  * @return {Number OR Null}   -> converted data
  */
-function getNumberFromText(txt){
+/*function getNumberFromText(txt){
 
 	// remove unwanted characters from txt[, .]
 	text = txt.replace(',.','');
 
 	return nlp.value(text).number
-}
+}*/
 
 
 module.exports = bot;

@@ -5,20 +5,20 @@ module.exports  = React.createClass({
 	render: function(){
 		return(
 			<div className="row">
-			  <div className="col-xs-12 text-xs-center">
-			    <div className="alert alert-success" role="alert">
-			      <strong>Well done!</strong> You successfully read <a href="#" className="alert-link">this important alert message</a>.
-			    </div>
-			  </div>
-			  <div className="col-xs-12 text-xs-center">
-			    <div className="alert alert-danger" role="alert">
-			      <strong>Well done!</strong> You successfully read <a href="#" className="alert-link">this important alert message</a>.
-			    </div>
-			  </div>
-			  <div className="col-xs-12 text-xs-center">
-			    <div className="alert alert-success" role="alert">
-			      <strong>Well done!</strong> You successfully read <a href="#" className="alert-link">this important alert message</a>.
-			    </div>
+				{this.props.infos.reverse().map(info => {
+					return	<Alert key={info.id} type={(info.type == 'error') ? 'danger':'success'} msg={info.msg} />;
+				})}
+			</div>
+		);
+	}
+});
+
+var Alert = React.createClass({
+	render: function(){
+		return(
+			<div className="col-xs-12 text-xs-center">
+			  <div className={"alert alert-"+this.props.type} role="alert">
+			   		{this.props.msg}
 			  </div>
 			</div>
 		);

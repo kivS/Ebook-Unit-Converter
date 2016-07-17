@@ -10,10 +10,11 @@ module.exports  = React.createClass({
 			return;
 		}
 		document.getElementById('uploadFiles').click();	
-		
+
 	},
 	handleFileUpload: function(e){
 		this.props.startBot(e.target.files);
+		e.target.value = '';
 	},
 	render: function(){
 		return(
