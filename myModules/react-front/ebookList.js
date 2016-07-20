@@ -8,7 +8,7 @@ module.exports  = React.createClass({
 			  <div className="col-xs-12 text-xs-center">
 			    <div className="card-deck">
 			  	{this.props.converted_ebooks.reverse().map(ebook => {
-			  		return <Ebook key={ebook.id} name={ebook.name} />
+			  		return <Ebook key={ebook.id} name={ebook.name} system={ebook.system} />
 			  	})}
 			    </div>
 			  </div>
@@ -22,6 +22,7 @@ var Ebook = React.createClass({
 		return(
 			<div className="card">
 			  <div className="card-block">
+			  	<h6 className="card-title"><strong>{this.props.system}</strong></h6>
 			    <h6 className="card-title">{this.props.name}</h6>
 			    <a href="#" className="btn btn-primary-outline btn-block">Download</a>
 			  </div>
