@@ -12,6 +12,9 @@ var DownAllEbooks = require("./myModules/react-front/downAllEbooks.js");
 // Load config file
 var $config = require('./config.js');
 
+//
+window.converted_ebooks_data = [];
+
 // Load converter modules
 var $epub = require('./myModules/epub.js');
 
@@ -81,7 +84,8 @@ var App = React.createClass({
 			 	<DragAndDrop startBot={this.startBot}/>
 			  
 			  	{/*Download all ebooks */}
-			  	<DownAllEbooks />
+			  	{/*TODO:*/}
+			  	{/*<DownAllEbooks />*/}
 			  
 			  	{/* Ebook list area*/}
 			  	<EbookList converted_ebooks={this.state.converted_ebooks} /> 

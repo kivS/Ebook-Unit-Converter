@@ -114,12 +114,18 @@ function saveEpubFile(epubFile_name,epubFile_data){
 	//
 	// Local $config
 	var config = $config.open();
+	var file_id = Date.now()+Math.random();
+
+	window.converted_ebooks_data.push({
+		id: file_id.toString(),
+		file_name: epubFile_name,
+		file_data: epubFile_data
+	});
 
 	config.converted_ebooks.push({
-		id: Date.now()+Math.random(),
+		id: file_id,
 		system: (config.user_options.unit === 'toImperial')? 'Imperial System':'Metric System',
 		name: epubFile_name,
-		file_data: epubFile_data
 	});
 	$config.save(config);
 }
