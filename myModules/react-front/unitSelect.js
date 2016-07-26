@@ -14,6 +14,8 @@ module.exports  = React.createClass({
     return(
       <div className="row">
         <div className="col-xs-12 text-xs-center">
+          <h4><span className="label label-default">Convert Ebook to:</span></h4>
+          <br/>
           <div className="btn-group" data-toggle="buttons">
             <label className="btn btn-primary-outline" onClick={this.handleSelect.bind(null,'toMetric')}>
               <input type="radio" name="toMetric" id="option1" autoComplete="off"/>

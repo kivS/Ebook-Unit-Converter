@@ -4,7 +4,7 @@
   "description": "User inserts ebooks and chooses beetween imperic or metric system. Owl picks up his pen and starts cramming. Users gets his freshly converted ebooks ",
   "main": "my.js",
   "scripts": {
-    "dev": "sass --watch my.sass:dist/my.css & puer -p 3000 --no-launch & watchify my.js -v -t babelify -o dist/my.js",
+    "dev": "sass --watch my.sass:dist/my.css & puer -p 3000 --no-launch  & watchify my.js -v -t babelify -o dist/my.js",
     "build": ""
   },
   "author": "Vik Borges",

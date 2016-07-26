@@ -48,7 +48,9 @@ var Ebook = React.createClass({
 		return(
 			<div className="card">
 			  <div className="card-block">
-			  	<h6 className="card-title"><strong>{this.props.system}</strong></h6>
+			  	<span className="label label-pill label-info">{this.props.system}</span>
+			  	<br/>
+			  	<br/>
 			    <h6 className="card-title">{this.props.name}</h6>
 			    <a href={this.href} download={this.props.name} className="btn btn-primary-outline btn-block" onClick={this.handleDownload}>Download</a>
 			  </div>

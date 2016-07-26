@@ -18,7 +18,7 @@ module.exports  = React.createClass({
 	},
 	render: function(){
 		return(
-			<div className="row">
+			<div className="row upload_area">
 			  <div className="col-xs-12 text-xs-center">
 			    <button className="btn btn-primary-outline" onClick={this.handleUploadBtn} type="submit">Click here to upload</button>
 			    <input type="file" name="uploadFiles[]" id="uploadFiles" onChange={this.handleFileUpload} style={{display:'none'}} multiple/>
