@@ -7,6 +7,7 @@ module.exports  = React.createClass({
 		return(
 			<div className="row">
 			  <div className="col-xs-12 text-xs-center">
+			  	<p className="text-muted">Converted Ebooks</p>
 			    <div className="card-deck">
 			  	{this.props.converted_ebooks.reverse().map(ebook => {
 			  		return <Ebook key={ebook.id} name={ebook.name} system={ebook.system} id={ebook.id} />

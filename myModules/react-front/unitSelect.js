@@ -4,11 +4,19 @@ var $config = require('../../config.js');
 module.exports  = React.createClass({
   displayName: 'unitSelect',
 
-  handleSelect: function(sel){
-    //TODO: events is exec twice
+  handleSelect: function(sel,e){
     var config = $config.open();
     config.user_options.unit = sel;
     $config.save(config);
+
+    document.querySelectorAll('.btn-group label').forEach(el => {el.classList.remove('active')});
+
+    if(sel === 'toMetric'){
+     document.querySelectorAll('.btn-group label')[0].classList.add('active');
+    }else{
+      document.querySelectorAll('.btn-group label')[1].classList.add('active');
+    }
+  
   },
   render: function(){
     return(

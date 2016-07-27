@@ -5,6 +5,9 @@ module.exports  = React.createClass({
 	render: function(){
 		return(
 			<div className="row feed_area">
+				<div className="col-xs-12 text-xs-center">
+					<p className="text-muted text-ce">Infos & Errors</p>
+				</div>
 				{this.props.infos.reverse().map(info => {
 					return	<Alert key={info.id} type={(info.type == 'error') ? 'danger':'success'} msg={info.msg} />;
 				})}
