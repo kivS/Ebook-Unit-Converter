@@ -4,7 +4,7 @@
   "description": "User inserts ebooks and chooses beetween imperic or metric system. Owl picks up his pen and starts cramming. Users gets his freshly converted ebooks ",
   "main": "my.js",
   "scripts": {
-    "dev": "sass --watch my.sass:dist/my.css & puer -p 3000 --no-launch  & watchify my.js -v -t babelify -o dist/my.js",
+    "dev": "gulp dev",
     "build": ""
   },
   "author": "Vik Borges",
@@ -19,6 +19,14 @@
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
-    "babelify": "^7.3.0"
+    "babelify": "^7.3.0",
+    "browser-sync": "^2.14.0",
+    "browserify": "^13.1.0",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2",
+    "gulp-util": "^3.0.7",
+    "lodash.assign": "^4.1.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0"
   }
 }
