@@ -2,7 +2,7 @@ var $units = require('./units.js');
 var $config = require('../config.js');
 
 var bot = {};
-var lastZippedFileTracker,zip,config,aliasesRegExp;
+var lastZippedFileTracker,filesChangedInEpub,zip,config,aliasesRegExp;
 
 bot.start = function(file){
 	//console.info('['+file.name + '] is an epub ebook!');
@@ -25,6 +25,9 @@ function processEpub(epubFile,zippedFiles){
 	console.log('\nCurrent epub file: '+epubFile);
 	var zippedFiles = zippedFiles.files;
 	lastZippedFileTracker = Object.keys(zippedFiles);
+
+	// init epub changed tracker
+	filesChangedInEpub = 0;
 
 	//Build aliases regExp
 	aliasesRegExp = new RegExp("\\b("+getAliasesRegExp()+")\\b",'gi');
@@ -85,6 +88,10 @@ function processCurrentFile(currentFile,epubFile,data){
 		if(newData != null){
 			data = newData;
 			console.log('Converted data: '+data);
+
+			//update epub tracker
+			filesChangedInEpub +=1;
+
 			//Save converted data into current file
 			zip.file(currentFile.name, data);
 		}else{
@@ -102,6 +109,21 @@ function checkLastFile(currentFileName,epubFile){
 		//console.log('lastZippedFileTracker:'+lastZippedFileTracker);
 	}else{
 		console.log('Last processed file in zip: '+currentFileName);
+
+		// save epub only if its files have been updated...
+		console.log('Number of files changes in [%s]: %s',epubFile,filesChangedInEpub);
+		if(filesChangedInEpub === 0){
+			var config = $config.open();
+			config.infos.push({
+				id: Date.now()+Math.random(),
+				type: 'error',
+				msg: 'Nothing to change in ['+epubFile+']...'
+			});
+			$config.save(config);
+
+			return false;
+		}
+
 		//Save converted epub ebooks
 		zip.generateAsync({type:'blob'}).then(saveEpubFile.bind(null,epubFile));
 
