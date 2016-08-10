@@ -8,7 +8,7 @@ var bot = {};
  * Get file data & units desired, do magic then .. profit??
  * @param  {[String]} data       -->     ebook text data 
  * @param  {[object]} user_units -->     user's desired units
- * @param  {[object]} epubFile -->     	 current epub file
+ * @param  {[String]} epubFile -->     	 current epub file
  * @return {[String]}  data      -->     updated text data
  */
 bot.converter = function(data,user_units,epubFile) {
@@ -66,7 +66,7 @@ bot.converter = function(data,user_units,epubFile) {
 				console.log('result: '+params+"("+convert(query)+")");
 				
 				// data.replace will replace the data with params+"("+q_result+")"
-				return params+"("+q_result+")";
+				return p1+p2+"("+q_result+")";
 			});
 			
 		});

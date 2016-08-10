@@ -17,7 +17,7 @@ var initialConfig = {
 				},
         {
           name:'inches',
-          alias:['inch','in','inches'],
+          alias:['inch','inches'],
           convertsTo:'cm',
         },
         {
