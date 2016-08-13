@@ -1,4 +1,5 @@
 var $config = require('../config.js');
+var math = require('../node_modules/mathjs/dist/math.min.js');
 
 var bot = {};
 //var nlp = window.nlp_compromise;

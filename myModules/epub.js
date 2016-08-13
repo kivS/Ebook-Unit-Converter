@@ -1,5 +1,6 @@
 var $units = require('./units.js');
 var $config = require('../config.js');
+var JSZip = require('../node_modules/jszip/dist/jszip.min.js');
 
 var bot = {};
 var lastZippedFileTracker,filesChangedInEpub,zip,config,aliasesRegExp;
