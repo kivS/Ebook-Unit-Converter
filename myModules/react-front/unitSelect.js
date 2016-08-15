@@ -22,14 +22,14 @@ module.exports  = React.createClass({
     return(
       <div className="row">
         <div className="col-xs-12 text-xs-center">
-          <h4><span className="label label-default">Convert Ebook to:</span></h4>
+          <h4><span className="tag tag-default">Convert Ebook to:</span></h4>
           <br/>
           <div className="btn-group" data-toggle="buttons">
-            <label className="btn btn-primary-outline" onClick={this.handleSelect.bind(null,'toMetric')}>
+            <label className="btn btn-outline-primary" onClick={this.handleSelect.bind(null,'toMetric')}>
               <input type="radio" name="toMetric" id="option1" autoComplete="off"/>
               Metric System
             </label>
-            <label className="btn btn-primary-outline" onClick={this.handleSelect.bind(null,'toImperial')}>
+            <label className="btn btn-outline-primary" onClick={this.handleSelect.bind(null,'toImperial')}>
               <input type="radio" name="toImperial" id="option2" autoComplete="off"/> 
               Imperial System
             </label>

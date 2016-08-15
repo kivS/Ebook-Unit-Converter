@@ -6,7 +6,7 @@ module.exports = React.createClass({
 		return(
 			<div className="row">
 			  <div className="col-xs-12 text-xs-center">
-			    <button className="btn btn-primary-outline" type="submit">Download  All</button>
+			    <button className="btn btn-outline-primary" type="submit">Download  All</button>
 			  </div>
 			</div>
 		);
